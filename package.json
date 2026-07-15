@@ -1,12 +1,17 @@
 {
   "name": "tiny-state-core",
-  "version": "0.1.0",
-  "description": "極簡狀態核心模組｜🥃LKMINI Master Ledger",
+  "version": "1.0.0",
+  "description": "A minimal composable state core. Mount it anywhere, detach anytime.",
   "main": "core.js",
   "scripts": {
-    "test": "node test.js"
+    "test": "node test.js",
+    "build": "node build.js"
   },
-  "keywords": ["state", "core", "lkmini", "minimal"],
-  "author": "lkminiPhantomWorld",
+  "keywords": [
+    "state",
+    "core",
+    "composable"
+  ],
+  "author": "Kevin Yang",
   "license": "MIT"
 }

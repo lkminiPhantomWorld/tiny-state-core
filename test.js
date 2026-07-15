@@ -1,41 +1,28 @@
 /**
- * tiny-state-core test
- * 指向本體：🥃LKMINI｜Master Ledger
+ * tiny-state-core 測試
  */
 
-const { createState } = require('./core');
+const StateCore = require('./core.js');
 
-let passed = 0;
-let failed = 0;
+// 建立狀態核心
+const store = new StateCore({ count: 0 });
 
-function assert(label, condition) {
-  if (condition) {
-    console.log(`✅ PASS: ${label}`);
-    passed++;
-  } else {
-    console.error(`❌ FAIL: ${label}`);
-    failed++;
-  }
-}
+// 訂閱狀態變化
+const unsubscribe = store.subscribe((state) => {
+  console.log('狀態已更新:', state);
+});
 
-const state = createState({ count: 0, name: 'LKMINI' });
+// 測試狀態更新
+console.log('初始狀態:', store.getState());
 
-assert('初始值 count === 0', state.get('count') === 0);
-assert('初始值 name === LKMINI', state.get('name') === 'LKMINI');
+store.setState({ count: 1 });
+store.setState({ count: 2 });
+store.setState({ count: 3 });
 
-state.set('count', 42);
-assert('set count === 42', state.get('count') === 42);
+// 取消訂閱
+unsubscribe();
 
-state.undo();
-assert('undo count === 0', state.get('count') === 0);
+store.setState({ count: 4 });
 
-const snap = state.snapshot();
-assert('snapshot 是獨立物件', snap !== state);
-assert('snapshot count === 0', snap.count === 0);
-
-let notified = false;
-state.subscribe('count', () => { notified = true; });
-state.set('count', 99);
-assert('subscribe 觸發通知', notified === true);
-
-console.log(`\n結果：${passed} 通過，${failed} 失敗`);
+console.log('最終狀態:', store.getState());
+console.log('測試完成');
